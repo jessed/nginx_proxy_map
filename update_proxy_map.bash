@@ -19,7 +19,7 @@ if [[ $LOCAL == $REMOTE ]]; then
 elif [[ $LOCAL == $BASE ]]; then
   echo "Need to pull ($LOCAL -> $REMOTE)"
   git reset --hard origin/$branch
-  git pull branch-name
+  git pull
 fi
 
 # See if the proxy_map.conf file has been updated
