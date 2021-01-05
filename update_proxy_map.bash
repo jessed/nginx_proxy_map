@@ -30,7 +30,7 @@ diff -q proxy_map.conf /etc/nginx/proxy_map.conf
 if [[ $? != 0 ]]; then
   DATE=$(date +%s)
   sudo mv /etc/nginx/proxy_map.conf.* /etc/nginx/old
-  sudo mv -f /etc/nginx/proxy_map.conf /etc/nginx/old/proxy_map.conf-${DATE}
+  sudo mv -f /etc/nginx/proxy_map.conf /etc/nginx/proxy_map.conf-${DATE}
   sudo cp proxy_map.conf /etc/nginx
 
   sudo nginx -t 2>/dev/null
