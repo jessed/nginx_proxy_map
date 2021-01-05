@@ -6,8 +6,8 @@ branch='main'
 
 cd $proxyDir
 
-git checkout
-git remote update
+git checkout >/dev/null
+git remote update >/dev/null
 
 UPSTREAM=${1:-@{u}}
 LOCAL=$(git rev-parse @)
