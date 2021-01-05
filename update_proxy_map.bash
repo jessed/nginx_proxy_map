@@ -14,9 +14,9 @@ REMOTE=$(git rev-parse "$UPSTREAM")
 BASE=$(git merge-base @ "$UPSTREAM")
 
 if [[ $LOCAL == $REMOTE ]]; then
-  echo "Up-to-date"
+  echo "$(date +%T): Up-to-date"
 elif [[ $LOCAL == $BASE ]]; then
-  echo "Need to pull ($LOCAL -> $BASE)"
+  echo "$(date +%T): Need to pull ($LOCAL -> $BASE)"
   git reset -q --hard origin/$branch
   git pull -q
 fi
@@ -28,14 +28,14 @@ diff -q proxy_map.conf /etc/nginx/proxy_map.conf
 # and reload nginx
 if [[ $? != 0 ]]; then
   DATE=$(date +%s)
-  echo "Moving old backup to /etc/nginx/old"
+  echo "$(date +%T): Moving old backup to /etc/nginx/old"
   sudo mv /etc/nginx/proxy_map.conf-* /etc/nginx/old
-  echo "Backing up current proxy map (/etc/nginx/proxy_map.conf-${DATE})"
+  echo "$(date +%T): Backing up current proxy map (/etc/nginx/proxy_map.conf-${DATE})"
   sudo mv -f /etc/nginx/proxy_map.conf /etc/nginx/proxy_map.conf-${DATE}
-  echo "Moving new proxy may into place"
+  echo "$(date +%T): Moving new proxy may into place"
   sudo cp proxy_map.conf /etc/nginx
 
-  echo "Reloading nginx"
+  echo "$(date +%T): Reloading nginx"
   sudo nginx -tq
   if [[ $? == 0 ]]; then sudo systemctl reload nginx; fi
 fi
