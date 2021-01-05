@@ -22,10 +22,17 @@ elif [[ $LOCAL == $BASE ]]; then
   echo git pull branch-name
 fi
 
-DATE=$(date +%s)
-sudo mv /etc/nginx/proxy_map.conf.* /etc/nginx/old
-sudo mv -f /etc/nginx/proxy_map.conf /etc/nginx/old/proxy_map.conf-${DATE}
-sudo cp proxy_map.conf /etc/nginx
+# See if the proxy_map.conf file has been updated
+diff -q proxy_map.conf /etc/nginx/proxy_map.conf
 
-sudo nginx -t 2>/dev/null
-if [[ $? == 0 ]]; then sudo systemctl reload nginx; fi
+# If it has been updated, backup the current file, move the new one into place
+# and reload nginx
+if [[ $? != 0 ]]; then
+  DATE=$(date +%s)
+  sudo mv /etc/nginx/proxy_map.conf.* /etc/nginx/old
+  sudo mv -f /etc/nginx/proxy_map.conf /etc/nginx/old/proxy_map.conf-${DATE}
+  sudo cp proxy_map.conf /etc/nginx
+
+  sudo nginx -t 2>/dev/null
+  if [[ $? == 0 ]]; then sudo systemctl reload nginx; fi
+fi
