@@ -1,5 +1,6 @@
 #! /bin/bash
 
+echo "$(date +%T) Checking for updates"
 proxyDir=/opt/nginx_proxy_map
 repo='https://github.com/jessed/nginx_proxy_map.git'
 branch='main'
