@@ -6,7 +6,6 @@ branch='main'
 
 cd $proxyDir
 
-#git checkout -q
 git remote update >/dev/null
 
 UPSTREAM=${1:-@{u}}
