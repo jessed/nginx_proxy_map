@@ -5,6 +5,9 @@ proxyDir=/opt/nginx_proxy_map
 repo='https://github.com/jessed/nginx_proxy_map.git'
 branch='main'
 
+proxy_1="10.211.1.6"
+proxy_2="10.211.1.7"
+
 cd $proxyDir
 
 git remote update >/dev/null
@@ -16,11 +19,16 @@ BASE=$(git merge-base @ "$UPSTREAM")
 
 if [[ $LOCAL == $REMOTE ]]; then
   echo "$(date +%T): Up-to-date"
+  exit
 elif [[ $LOCAL == $BASE ]]; then
   echo "$(date +%T): Need to pull ($LOCAL -> $BASE)"
   git reset -q --hard origin/$branch
   git pull -q
 fi
+
+# Update proxy_map.conf with proxy addresses
+sed -i  -e 's/proxy_1/'$proxy_1'/g' proxy_map.conf
+sed -i  -e 's/proxy_2/'$proxy_2'/g' proxy_map.conf
 
 # See if the proxy_map.conf file has been updated
 diff -q proxy_map.conf /etc/nginx/proxy_map.conf
