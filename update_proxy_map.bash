@@ -19,7 +19,7 @@ BASE=$(git merge-base @ "$UPSTREAM")
 
 if [[ $LOCAL == $REMOTE ]]; then
   echo "$(date +%T): Up-to-date"
-  exit
+  #exit
 elif [[ $LOCAL == $BASE ]]; then
   echo "$(date +%T): Need to pull ($LOCAL -> $BASE)"
   git reset -q --hard origin/$branch
