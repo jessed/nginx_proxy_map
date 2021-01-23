@@ -5,8 +5,6 @@ proxyDir=/opt/nginx_proxy_map
 repo='https://github.com/jessed/nginx_proxy_map.git'
 branch='main'
 
-proxy_1="10.211.1.6"
-proxy_2="10.211.1.7"
 
 cd $proxyDir
 
@@ -26,9 +24,12 @@ elif [[ $LOCAL == $BASE ]]; then
   git pull -q
 fi
 
+# get proxy addresses from proxies.conf
+source proxies.conf
+
 # Update proxy_map.conf with proxy addresses
-sed -i  -e 's/proxy_1/'$proxy_1'/g' proxy_map.conf
-sed -i  -e 's/proxy_2/'$proxy_2'/g' proxy_map.conf
+sed -i -e 's/ple_1/'$ple_1'/g' proxy_map.conf
+sed -i -e 's/ple_2/'$ple_2'/g' proxy_map.conf
 
 # See if the proxy_map.conf file has been updated
 diff -q proxy_map.conf /etc/nginx/proxy_map.conf
